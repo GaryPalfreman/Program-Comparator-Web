@@ -1,20 +1,47 @@
-# Program & Document Comparator
+# Document Comparator
 
-A browser-based conversion of the original Tkinter **Program Checking App**.
+A browser-based comparator for general documents and CNC programs.
 
-## Features
+## Comparison modes
 
-- Upload and compare two files
-- TXT and PDF support
-- CNC/program file extensions supported: `.nc`, `.cnc`, `.tap`, `.iso`, `.mpf`, `.spf`
-- Line-by-line differences
-- Changed characters highlighted
+### General Document
+
+Use this for ordinary text-based documents and PDFs. It provides:
+
+- Line-by-line comparison
+- Changed-character highlighting
 - Similarity percentage per differing line
 - Ignore-position comparison
-- Duplicate lines are preserved in ignore-position mode
 - Side-by-side source display
-- Merge results using File 1 or File 2 as the preferred source
-- Download the merged file directly from the browser
+- Simple line-based merge and download
+
+### CNC Program
+
+Select **CNC Program** before comparing machine programs. This enables the CNC-aware engine with:
+
+- Alignment of inserted and deleted CNC blocks
+- Optional ignoring of N sequence numbers, comments and whitespace
+- CNC address parsing and classification
+- G-code and M-code changes
+- X/Y/Z/A/B/C/U/V/W position changes
+- I/J/K/R arc and geometry changes
+- Feed `F`, spindle `S`, tool `T`, H/D offset and cycle parameter changes
+- Macro change detection
+- CNC change summary
+- Downloadable CSV comparison report
+
+## Supported files
+
+- `.txt`
+- `.pdf`
+- `.nc`
+- `.cnc`
+- `.tap`
+- `.iso`
+- `.mpf`
+- `.spf`
+
+PDF comparison depends on extractable PDF text. Scanned/image-only PDFs require OCR, which is not included in this version.
 
 ## Run locally
 
@@ -27,13 +54,9 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Deploy on Streamlit Community Cloud
+## Live deployment
 
-1. Sign in to Streamlit Community Cloud.
-2. Choose **Create app**.
-3. Select `GaryPalfreman/Program-Comparator-Web` and the `main` branch.
-4. Set the main file path to `app.py`.
-5. Deploy.
+The `main` branch is deployed through Streamlit Community Cloud with `app.py` as the main application file.
 
 ## Project structure
 
@@ -49,8 +72,6 @@ streamlit run app.py
     └── config.toml
 ```
 
-## Notes
+## Safety note
 
-PDF comparison depends on extractable PDF text. Scanned/image-only PDFs require OCR, which is not included in this version.
-
-The merge logic follows the original application's line-based behaviour, with the addition that the user can choose which file wins when a line differs.
+The current merge function remains line-based. CNC programs should always be reviewed and validated before any merged output is used on a machine control.
